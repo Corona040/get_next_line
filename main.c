@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 17:53:41 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 18:32:17 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:02:12 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	test(char **tests, int repeat)
 		do
 		{
 			line = get_next_line(fd);
-			printf("%s\n", line);
-		} while (ft_strchr(line, '\n'));
+			printf("%s", line);
+		} while (line);
 		close(fd);
 		printf(".\n\n");
 		i--;

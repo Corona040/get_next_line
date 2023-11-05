@@ -6,7 +6,7 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:39:18 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 18:39:42 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/05 19:11:04 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,33 @@ int	read_line(int fd, char buffer[], char **line)
 	if (buffer)
 		*line = ft_strdup(buffer);
 	nl = 0;
-	do
+	if (!ft_strchr(buffer, '\n'))
 	{
-		read_size = read(fd, buffer, BUFFER_SIZE);
-		temp = *line;
-		*line = ft_strjoin(*line, buffer);
-		free(temp);
-		nl = ft_strchr(*line, '\n');
-	}
-	while (!nl && read_size == BUFFER_SIZE);
-	if (read_size == BUFFER_SIZE)
-	{
-		ft_strlcpy(buffer, nl + 1, BUFFER_SIZE);
-		*nl = 0;
+		do
+		{
+			read_size = read(fd, buffer, BUFFER_SIZE);
+			temp = *line;
+			*line = ft_strjoin(*line, buffer);
+			free(temp);
+			nl = ft_strchr(*line, '\n');
+		}
+		while (!nl && read_size == BUFFER_SIZE);
+		if (read_size == BUFFER_SIZE)
+		{
+			ft_strlcpy(buffer, nl + 1, BUFFER_SIZE);
+			//THIS LEAVES TRASH AFTER NULL BYTE, SHOULD REALLOC LINE TO PROPER SIZE
+			*(nl + 1) = 0;
+		}
+		else
+		{
+			ft_bzero(buffer, BUFFER_SIZE);
+			*line = 0;
+		}
 	}
 	else
-		ft_bzero(buffer, BUFFER_SIZE);
+	{
+		*(ft_strchr(*line, '\n') + 1) = 0;
+		ft_strlcpy(buffer, buffer + 1, BUFFER_SIZE);
+	}
 	return (1);
 }
