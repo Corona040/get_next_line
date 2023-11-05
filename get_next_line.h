@@ -6,7 +6,7 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:41:53 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 13:50:25 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/05 15:33:35 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-char	*read_line(int fd, char buffer[], char *temp);
+int		read_line(int fd, char buffer[], char **line);
+char	*ft_strdup(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlen(const char *s);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memset(void *s, int c, size_t n);
 
 #endif
