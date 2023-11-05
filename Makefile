@@ -1,11 +1,23 @@
-get_next_line: get_next_line.c
-	cc -Wall -Wextra -Werror -D BUFFER_SIZE=10 get_next_line.c get_next_line_utils.c -o $@
+NAME = get_next_line
 
-all: get_next_line
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=10
+
+SRCS = main.c get_next_line.c get_next_line_utils.c
+
+RM = rm -rf
+
+$(NAME): $(SRCS)
+		   $(CC) $(CFLAGS) $^ -o $@
+
+all: $(NAME)
 
 clean: fclean
 
 fclean:
-	rm -rf get_next_line
+	$(RM) $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:39:18 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 15:38:18 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/05 18:39:42 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ int	read_line(int fd, char buffer[], char **line)
 	char	*nl;
 	size_t	read_size;
 
-	(void)line;
-	(void)temp;
-	(void)nl;
 	if (buffer)
 		*line = ft_strdup(buffer);
 	nl = 0;
@@ -50,22 +47,7 @@ int	read_line(int fd, char buffer[], char **line)
 		ft_strlcpy(buffer, nl + 1, BUFFER_SIZE);
 		*nl = 0;
 	}
+	else
+		ft_bzero(buffer, BUFFER_SIZE);
 	return (1);
-}
-
-#include <stdio.h>
-#include <fcntl.h>
-
-int	main(void)
-{
-	int	fd;
-
-	fd = open("/home/eco/Desktop/42Cursus/get_next_line/test.txt",
-			O_RDONLY);
-	//get_next_line(fd);
-	//get_next_line(fd);
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	close(fd);
 }
