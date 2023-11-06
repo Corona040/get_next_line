@@ -6,11 +6,13 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 13:39:18 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 19:11:04 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:40:12 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+//REMEMBER TO REMOVE PRINTF
+//#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -39,8 +41,10 @@ int	read_line(int fd, char buffer[], char **line)
 		{
 			read_size = read(fd, buffer, BUFFER_SIZE);
 			temp = *line;
-			*line = ft_strjoin(*line, buffer);
-			free(temp);
+			*line = ft_strjoinnul(*line, buffer);
+			//printf("%s", *line);
+			if (temp)
+				free(temp);
 			nl = ft_strchr(*line, '\n');
 		}
 		while (!nl && read_size == BUFFER_SIZE);
@@ -63,3 +67,16 @@ int	read_line(int fd, char buffer[], char **line)
 	}
 	return (1);
 }
+
+/*
+#include <fcntl.h>
+
+int	main(void)
+{
+	int	fd;
+
+	fd = open("/home/eco/Desktop/42cursus/get_next_line/tests/banana.txt", O_RDONLY);
+	get_next_line(fd);
+	close(fd);
+}
+*/
