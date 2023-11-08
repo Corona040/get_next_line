@@ -5,6 +5,7 @@ char	*ft_strjoinnul(char const *s1, char const *s2)
 {
 	char *join;
 
+	join = 0;
 	if (s1 && s2)
 		join = ft_strjoin(s1, s2);
 	else if (!s1 && !s2)

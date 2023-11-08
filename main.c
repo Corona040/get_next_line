@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 17:53:41 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/05 19:02:12 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/08 11:51:09 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 
 #define PATH "/home/eco/Desktop/42Cursus/get_next_line/tests/"
+#define PATO "/nfs/homes/ecorona-/Desktop/42Cursus/get_next_line/tests/"
 
 void	test(char **tests, int repeat);
 
@@ -46,7 +47,7 @@ void	test(char **tests, int repeat)
 		if (i == repeat)
 			printf("TEST: %s\n", *tests);
 		printf("iteration: %i\n\n.", repeat - i + 1);
-		test = ft_strjoin(PATH, *tests);
+		test = ft_strjoin(PATO, *tests);
 		fd = open(test, O_RDONLY);
 		do
 		{
