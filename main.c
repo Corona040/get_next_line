@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 17:53:41 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/08 11:51:09 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:46:23 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#define PATH "/home/eco/Desktop/42Cursus/get_next_line/tests/"
-#define PATO "/nfs/homes/ecorona-/Desktop/42Cursus/get_next_line/tests/"
+#define PATH "./tests/"
 
 void	test(char **tests, int repeat);
 
