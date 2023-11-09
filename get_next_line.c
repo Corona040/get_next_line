@@ -6,7 +6,7 @@
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 10:29:30 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/09 11:47:57 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:12:37 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,42 @@ char    *get_next_line(int fd)
     static char buffer[BUFFER_SIZE];
     char        *line;
 
-	line = 0;
 	if (fd < 0)
 		return (0);
-	if (read_buffer(buffer, &line) == 1)
-		read_line(fd, &line);
+	if (read_buffer(&buffer, &line))
+	{
+		read_file(fd, &line);
+	}
 	return (line);
 }
 
-int	read_buffer(char buffer[], char **line)
+int	read_buffer(char *buffer[], char **line)
 {
-	int	nl_ptr;
-
-	nl_ptr = ft_strchr(buffer, '\n');
-	if (nl_ptr);
-	{
-		//join to line from buffer until address nl_ptr (inclusive)
-		*line = ft_strpjoinnul(line, buffer, nl_ptr);
-		if (!*line)
-			return (-1) //if malloc fails
-		//similar to memmove, cpy to address buffer contents of nl_ptr until addres (buffer + BUFFERSIZE), and then bzero
-		buffer = ft_buffermove(buffer, nl_ptr);
-		return (0)
-	}
-	return (1);
+	//	empty
+	//	not empty, no  nl
+	//	not empty, has nl
+	parse(&buffer, );
 }
 
-void read_line(int fd, char *line)
+int	read_file(int fd, char **line)
 {
-	char	*temp;
-	int		read_size;
-
-	read_size = read(fd, temp, BUFFER_SIZE);
-	*line = ft_strjoinnul(*line, temp); //free join
+	//loop
+	//	no nl is read
+	//	read_size < BUFFER_SIZE
+	//if nl is read -> parse
+	//if read_size < BUFFER_SIZE
+	//	if read_size == 0 -> return line (line could be NULL)
+	parse(&buffer, &line);
 }
+
+int	parse(char *src, char *dest1, char *dest2);
+
+#include <fcntl.h>
 
 int	main(void)
 {
+	int fd;
+
+	fd = open("./tests/banana.txt", O_RDONLY);
 	get_next_line(0);
 }
