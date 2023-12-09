@@ -5,59 +5,134 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 10:29:30 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/09 17:12:37 by ecorona-         ###   ########.fr       */
+/*   Created: 2023/11/10 10:41:24 by ecorona-          #+#    #+#             */
+/*   Updated: 2023/11/27 11:09:01 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//REMEMBER TO UPDATE TESTER PATH WHEN WORKING ON A DIFFERENT MACHINE
-// ^ updated this to a relative path, did not test, dont know if it still compiles
-
 #include "get_next_line.h"
-//remember to remove printf, stdio.h
 #include <stdio.h>
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char buffer[BUFFER_SIZE];
-    char        *line;
+	static char	buffer[BUFFER_SIZE];
+	char		*line;
+	int			read_size;
+
+	int	i;
+	int	j;
+	int	k;
 
 	if (fd < 0)
 		return (0);
-	if (read_buffer(&buffer, &line))
+	i = 0;
+	//read buffer
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	//write buffer to line
+	line = malloc(i * sizeof(char));
+	if (!line)
+		return (0);
+	j = 0;
+	while (j < i)
 	{
-		read_file(fd, &line);
+		line[j] = buffer[j];
+		j++;
+	}
+	line[j] = '\0';
+	//if   whole line was in buffer, write buffer
+	//else read file
+	j = 0;
+	if (i > 0 && buffer[i - 1] == '\n')
+	{
+		while (buffer[i - 1] && i <= BUFFER_SIZE)
+			buffer[j++] = buffer[i++];
+	}
+	else
+	{
+		char	*temp;
+		int		loop;
+		//write buffer
+		loop = 1;
+		while (loop)
+		{
+			read_size = read(fd, buffer, BUFFER_SIZE);
+			if (read_size == 0)
+			{
+				free(line);
+				return (0);
+			}
+			//read buffer
+			j = 0;
+			while (buffer[j] && buffer[j] != '\n')
+				j++;
+			if (buffer[j] == '\n')
+				j++;
+			//write buffer to line
+			i += j;
+			temp = line;
+			line = malloc(i * sizeof(char));
+			if (!line)
+			{
+				free(temp);
+				return (0);
+			}
+			k = 0;
+			while (temp[k])
+			{
+				line[k] = temp[k];
+				k++;
+			}
+			free(temp);
+			i = 0;
+			while (i < j)
+			{
+				line[k + i] = buffer[i];
+				i++;
+			}
+			i += k;
+			line[i] = '\0';
+			k = 0;
+			if (j > 0 && buffer[j - 1] == '\n')
+			{
+				while (j <= BUFFER_SIZE)
+					buffer[k++] = buffer[j++];
+				if (!buffer[j - 1])
+					buffer[k] = buffer[j - 1];
+				loop = 0;
+			}
+			if (read_size < BUFFER_SIZE)
+				loop = 0;
+		}
 	}
 	return (line);
 }
 
-int	read_buffer(char *buffer[], char **line)
-{
-	//	empty
-	//	not empty, no  nl
-	//	not empty, has nl
-	parse(&buffer, );
-}
-
-int	read_file(int fd, char **line)
-{
-	//loop
-	//	no nl is read
-	//	read_size < BUFFER_SIZE
-	//if nl is read -> parse
-	//if read_size < BUFFER_SIZE
-	//	if read_size == 0 -> return line (line could be NULL)
-	parse(&buffer, &line);
-}
-
-int	parse(char *src, char *dest1, char *dest2);
-
+/*
 #include <fcntl.h>
+#include <stdio.h>
 
 int	main(void)
 {
-	int fd;
+	int	fd;
+	int	i;
+	int	j;
 
-	fd = open("./tests/banana.txt", O_RDONLY);
-	get_next_line(0);
+	j = 0;
+	while (j < 1)
+	{
+		fd = open("./banana.txt", O_RDONLY);
+		//fd = -1;
+		i = 0;
+		while (i < 13)
+		{
+			printf("%s", get_next_line(fd));
+			i++;
+		}
+		close(fd);
+		j++;
+	}
 }
+*/
