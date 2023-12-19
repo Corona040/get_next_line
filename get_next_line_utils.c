@@ -3,77 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecorona- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 10:47:48 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/11/10 12:38:27 by ecorona-         ###   ########.fr       */
+/*   Created: 2023/12/19 14:28:07 by ecorona-          #+#    #+#             */
+/*   Updated: 2023/12/19 19:33:53 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*
-char	*ft_strjoinnul(char *s1, char *s2)
+int	ft_strchr(char *str, int c)
 {
-	char	*join;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	n;
+	int	i;
 
-	len_s1 = 0;
-	len_s2 = 0;
-	while (s1 && *(s1 + len_s1))
-		len_s1++;
-	while (s2 && *(s2 + len_s2))
-		len_s2++;
-	join = malloc((len_s1 + len_s2 + 1) * sizeof(char));
-	if (!join)
+	if (!str)
 		return (0);
-	len_s1 = 0;
-	while (s1 && *s1)
-		*(join + len_s1++) = *s1++;
-	len_s2 = 0;
-	while (s2 && *s2)
-		*(join + len_s1 + len_s2++) = *s2++;
-	*(join + len_s1 + len_s2) = '\0';
-	return (join);
-}
-
-int	get_char_idx(char *str, int c)
-{
-	int i;
-
 	i = 0;
-	while (*(str + i) && *(str + i) != c)
+	while (str[i] != '\0' && str[i] != c)
 		i++;
-	if (*(str + i))
-		return (i);
-	else
-		return (-1);
+	if (c != 0 && str[i] == 0)
+		i = -1;
+	else if (c != 0 && str[i] == c)
+		i++;
+	return (i);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+int	ft_strcpy(char *dest, char *src, int start, int size)
 {
-	size_t	n;
-	size_t	len_src;
+	int	n;
+	int	len_src;
+	int	len_dest;
 
-	len_src = 0;
-	while (*(src + len_src))
-		len_src++;
-	if (size == 0)
+	len_src = ft_strchr(src, 0);
+	len_dest = ft_strchr(dest, 0);
+	if (size == 0 || start > len_dest)
 		return (len_src);
 	n = 0;
-	while (n + 1 < size && *(src + n))
+	while (n < size && *(src + n))
 	{
-		*(dst + n) = *(src + n);
+		*(dest + start + n) = *(src + n);
 		n++;
 	}
-	*(dst + n) = '\0';
+	*(dest + start + n) = '\0';
 	return (len_src);
 }
 
-void	split_at_first(char	*src, char *dest1, char dest2, int c)
+char	*ft_strjoin(char *str1, char *str2)
 {
+	int		str1_len;
+	int		str2_len;
+	char	*join;
 
+	str1_len = ft_strchr(str1, 0);
+	str2_len = ft_strchr(str2, 0);
+	join = ft_calloc(str1_len + str2_len + 1);
+	ft_strcpy(join, str1, 0, str1_len);
+	ft_strcpy(join, str2, str1_len, str2_len);
+	return (join);
 }
-*/
+
+void	*ft_free(void *ptr)
+{
+	if (ptr)
+		free(ptr);
+	return (NULL);
+}
+
+void	*ft_calloc(int size)
+{
+	int		i;
+	char	*ptr;
+
+	ptr = malloc(size * sizeof(char));
+	if (!ptr)
+		return (ft_free(ptr));
+	i = 0;
+	while (i < size)
+		ptr[i++] = '\0';
+	return (ptr);
+}
