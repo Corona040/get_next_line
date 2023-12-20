@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:28:31 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/12/19 20:18:42 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/12/20 10:28:02 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
-	char		*buf;
+	static char	buf[BUFFER_SIZE];
 	char		*line;
 	int			loop;
 
 	if (fd < 0)
 		return (NULL);
-	buf = ft_calloc(BUFFER_SIZE + 1);
-	ft_strcpy(buf, buffer, 0, BUFFER_SIZE + 1);
 	line = NULL;
 	loop = 1;
 	if (*buf)
@@ -33,8 +30,6 @@ char	*get_next_line(int fd)
 		if (!line)
 			loop = 0;
 	}
-	ft_strcpy(buffer, buf, 0, BUFFER_SIZE);
-	ft_free(buf);
 	return (line);
 }
 
@@ -85,13 +80,10 @@ char	*read_fd(int fd, char *buf, char *line, int *loop)
 	char	*temp;
 	char	*aux;
 	int		read_size;
-	char	buffer[BUFFER_SIZE];
 
-	write_buf(buffer, 0, 0);
-	read_size = read(fd, buffer, BUFFER_SIZE);
+	read_size = read(fd, buf, BUFFER_SIZE);
 	if (read_size > 0)
 	{
-		ft_strcpy(buf, buffer, 0, BUFFER_SIZE);
 		aux = read_buf(buf, loop);
 		temp = line;
 		line = ft_strjoin(line, aux);
