@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:28:31 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/12/20 10:28:02 by ecorona-         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:33:28 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE];
+	static char	buf[1024][BUFFER_SIZE];
 	char		*line;
 	int			loop;
 
@@ -22,11 +22,11 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = NULL;
 	loop = 1;
-	if (*buf)
-		line = read_buf(buf, &loop);
+	if (*buf[fd])
+		line = read_buf(buf[fd], &loop);
 	while (loop)
 	{
-		line = read_fd(fd, buf, line, &loop);
+		line = read_fd(fd, buf[fd], line, &loop);
 		if (!line)
 			loop = 0;
 	}
@@ -111,26 +111,3 @@ int	end_of_file(int read_size, int *loop, char *line)
 	}
 	return (0);
 }
-
-/*
-#include <fcntl.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-
-	fd = open("test.txt",O_RDONLY);
-	i = 1;
-	line = (void *)1;
-	while (line)
-	{
-		line = get_next_line(fd);
-		printf("call %i:\n%s\n",i++,line);
-	}
-	close(fd);
-}
-*/
