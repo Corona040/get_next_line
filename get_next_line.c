@@ -6,12 +6,20 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:28:31 by ecorona-          #+#    #+#             */
-/*   Updated: 2023/12/20 13:33:28 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:47:00 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
+ARGS:
+	fd: The file descriptor to be read.
+RETURN VALUE:
+	The first line of the file as a string.
+DESC:
+	Reads a file and returns its first line.
+*/
 char	*get_next_line(int fd)
 {
 	static char	buf[1024][BUFFER_SIZE];
