@@ -6,7 +6,7 @@
 /*   By: ecorona- <ecorona-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:28:31 by ecorona-          #+#    #+#             */
-/*   Updated: 2024/02/01 18:47:00 by ecorona-         ###   ########.fr       */
+/*   Updated: 2024/02/04 15:12:58 by ecorona-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ char	*read_buf(char *buf, int *loop)
 	int		new_line;
 	char	*line;
 
-	buf_len = ft_strchr(buf, 0);
-	new_line = ft_strchr(buf, '\n');
+	buf_len = gnl_strchr(buf, 0);
+	new_line = gnl_strchr(buf, '\n');
 	if (new_line > 0 && new_line <= buf_len)
 	{
-		line = ft_calloc(new_line + 1);
+		line = gnl_calloc(new_line + 1);
 		if (!line)
 			return (NULL);
-		ft_strcpy(line, buf, 0, new_line);
+		gnl_strcpy(line, buf, 0, new_line);
 		write_buf(buf, new_line, buf_len);
 		*loop = 0;
 	}
 	else
 	{
-		line = ft_calloc(buf_len + 1);
+		line = gnl_calloc(buf_len + 1);
 		if (!line)
 			return (NULL);
-		ft_strcpy(line, buf, 0, buf_len);
+		gnl_strcpy(line, buf, 0, buf_len);
 		write_buf(buf, 0, 0);
 	}
 	return (line);
@@ -94,9 +94,9 @@ char	*read_fd(int fd, char *buf, char *line, int *loop)
 	{
 		aux = read_buf(buf, loop);
 		temp = line;
-		line = ft_strjoin(line, aux);
-		ft_free(aux);
-		ft_free(temp);
+		line = gnl_strjoin(line, aux);
+		gnl_free(aux);
+		gnl_free(temp);
 		if (!line)
 			return (NULL);
 	}
